@@ -21,18 +21,25 @@
         margin-left: 30px;
       }
     </style>
-    <div class="node">
-      <span>{{label}}</span>
-      <template is="dom-if" if="{{collapsed}}">
-        <span class="node-button" on-tap="onExpand">[+]</span>
-      </template>
-      <template is="dom-if" if="{{!collapsed}}">
-        <span class="node-button" on-tap="onCollapse">[-]</span>
-        <div class="node-content" hidden$="{{collapsed}}">
-          <content></content>
-        </div>
-      </template>
-    </div>
+    <template is="dom-if" if="{{objectMode}}">
+      <div>
+        <content></content>
+      </div>
+    </template>
+    <template is="dom-if" if="{{!objectMode}}">
+      <div class="node">
+        <span>{{label}}</span>
+        <template is="dom-if" if="{{collapsed}}">
+          <span class="node-button" on-tap="onExpand">[+]</span>
+        </template>
+        <template is="dom-if" if="{{!collapsed}}">
+          <span class="node-button" on-tap="onCollapse">[-]</span>
+          <div class="node-content" hidden$="{{collapsed}}">
+            <content></content>
+          </div>
+        </template>
+      </div>
+    </template>
   </template>
   <script>
     Polymer({
@@ -41,9 +48,17 @@
         label: {
           type: String
         },
+        itemType: {
+          type: String
+        },
         collapsed: {
           type: Boolean,
           value: true
+        },
+        objectMode: {
+          type: Boolean,
+          value: false,
+          computed: 'computerObjectMode(itemType)'
         }
       },
       onExpand: function() {
@@ -52,6 +67,9 @@
       onCollapse: function() {
         this.collapsed = true;
       },
+      computerObjectMode: function(itemType) {
+        return (itemType==="object");
+      }
     });
   </script>
 </dom-module>

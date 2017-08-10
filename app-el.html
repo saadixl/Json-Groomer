@@ -38,23 +38,24 @@
     </style>
     <p>JSON Prettifier</p>
     <div id="inp">
-      <textarea id="inpArea">
-        {
-            "name": "Masudul Haque",
-            "email": "saadixl@mail.com",
-            "address": {
-              "house": "XX",
-              "road": "Y",
-              "area": "Central Homeland",
-              "city": "Dhaka",
-              "country": "Bangladesh"
-            },
-            "phone": {
-              "mobile": "0123456789",
-              "office": "0987654321"
-            }
-          }
-      </textarea>
+      <textarea id="inpArea">{
+"name": "Masudul Haque",
+"email": "saadixl@mail.com",
+"address": {
+  "house": "XX",
+  "road": "Y",
+  "area": "Central Homeland",
+  "city": "Dhaka",
+  "country": "Bangladesh"
+  },
+  "phone": {
+    "mobile": {
+      "career": "SomeTel",
+      "number" : "0123456789"
+    },
+    "office": "0987654321"
+  }
+}</textarea>
       <br />
       <button on-tap="prettify">Prettify</button>
     </div>
@@ -63,36 +64,16 @@
   <script>
     Polymer({
       is: 'app-el',
-      properties: {
-        sample: {
-          type: Object,
-          value: {
-            name: 'Masudul Haque',
-            email: 'saadixl@mail.com',
-            address: {
-              house: 'XX',
-              road: 'Y',
-              area: 'Centeral Homeland',
-              city: 'Dhaka',
-              country: 'Bangladesh'
-            },
-            phone: {
-              mobile: '0123456789',
-              office: '0987654321'
-            }
-          }
-        }
-      },
       traverse: function(jsonObj) {
         var jsonPrettifierParent = document.createElement('json-prettifier');
-        jsonPrettifierParent.label = "Object";
-        if( typeof jsonObj == "object" ) {
+        jsonPrettifierParent.itemType = "object";
+        if(typeof jsonObj === "object") {
           for(var key in jsonObj) {
-            if (jsonObj.hasOwnProperty(key)) {
+            if(jsonObj.hasOwnProperty(key)) {
               var jsonPrettifierChild = document.createElement('json-prettifier');
               jsonPrettifierChild.label = key;
               var content = this.traverse(jsonObj[key]);
-              if(typeof content == "object") {
+              if(typeof content === "object") {
                 Polymer.dom(jsonPrettifierChild).appendChild(content);
               } else {
                 var textNode = document.createTextNode(content);
@@ -111,8 +92,11 @@
         var textAreaValue = this.$.inpArea.value;
         var jsonObject = JSON.parse(textAreaValue);
         var jsonPrettified = this.traverse(jsonObject);
+        var finalElement = document.createElement('json-prettifier');
+        Polymer.dom(finalElement).appendChild(jsonPrettified);
+        finalElement.label = "Object";
         Polymer.dom(this.$.content).innerHTML = '';
-        Polymer.dom(this.$.content).appendChild(jsonPrettified);
+        Polymer.dom(this.$.content).appendChild(finalElement);
       },
     });
   </script>
