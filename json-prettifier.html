@@ -7,23 +7,23 @@
       }
 
       .node {
-        border: 1px solid #ddd;
-        margin: 10px;
-        padding: 3px;
+        margin: 0 5px;
         background: #fff;
         clear: both;
       }
 
       .node-button {
         cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
       }
       .node-content {
-        margin-left: 30px;
+        margin-left: 20px;
         font-size: 14px;
       }
 
       .node-label {
-        font-size: 16px;
+        font-size: 14px;
       }
     </style>
     <template is="dom-if" if="{{objectMode}}">
@@ -33,12 +33,9 @@
     </template>
     <template is="dom-if" if="{{!objectMode}}">
       <div class="node">
+        <span class="node-button" hidden$="{{!collapsed}}" on-tap="onExpand">[+]</span>
+        <span class="node-button" hidden$="{{collapsed}}" on-tap="onCollapse">[-]</span>
         <strong class="node-label">{{label}}</strong>
-        <template is="dom-if" if="{{collapsed}}">
-          <span class="node-button" on-tap="onExpand">[+]</span>
-        </template>
-        <template is="dom-if" if="{{!collapsed}}">
-          <span class="node-button" on-tap="onCollapse">[-]</span>
           <div class="node-content" hidden$="{{collapsed}}">
             <content></content>
           </div>
