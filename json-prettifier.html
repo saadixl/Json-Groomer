@@ -19,6 +19,11 @@
       }
       .node-content {
         margin-left: 30px;
+        font-size: 14px;
+      }
+
+      .node-label {
+        font-size: 16px;
       }
     </style>
     <template is="dom-if" if="{{objectMode}}">
@@ -28,7 +33,7 @@
     </template>
     <template is="dom-if" if="{{!objectMode}}">
       <div class="node">
-        <span>{{label}}</span>
+        <strong class="node-label">{{label}}</strong>
         <template is="dom-if" if="{{collapsed}}">
           <span class="node-button" on-tap="onExpand">[+]</span>
         </template>
