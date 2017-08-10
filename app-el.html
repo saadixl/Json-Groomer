@@ -38,7 +38,23 @@
     </style>
     <p>JSON Prettifier</p>
     <div id="inp">
-      <textarea id="inpArea"></textarea>
+      <textarea id="inpArea">
+        {
+            "name": "Masudul Haque",
+            "email": "saadixl@mail.com",
+            "address": {
+              "house": "XX",
+              "road": "Y",
+              "area": "Central Homeland",
+              "city": "Dhaka",
+              "country": "Bangladesh"
+            },
+            "phone": {
+              "mobile": "0123456789",
+              "office": "0987654321"
+            }
+          }
+      </textarea>
       <br />
       <button on-tap="prettify">Prettify</button>
     </div>
