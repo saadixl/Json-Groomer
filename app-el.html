@@ -7,19 +7,42 @@
       :host {
         display: block;
       }
+      #inp {
+        position: fixed;
+        width: 50%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background: #333;
+        padding: 1%;
+      }
+
+      #inp textarea {
+        width: 94%;
+        height: 90%;
+        background: transparent;
+        outline: none;
+        color: #f5f5f5;
+        font-family: monospace;
+        font-size: 15px;
+      }
+
+      #content {
+        position: fixed;
+        width: 50%;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        background: #f5f5f5;
+      }
     </style>
     <p>JSON Prettifier</p>
-    <json-prettifier label="Object">
-      <json-prettifier label="abc">
-        abc
-      </json-prettifier>
-      <json-prettifier label="abc">
-        abc
-      </json-prettifier>
-      <json-prettifier label="abc">
-        abc
-      </json-prettifier>
-    </json-prettifier>
+    <div id="inp">
+      <textarea id="inpArea"></textarea>
+      <br />
+      <button on-tap="prettify">Prettify</button>
+    </div>
+    <div id="content"></div>
   </template>
   <script>
     Polymer({
@@ -43,7 +66,38 @@
             }
           }
         }
-      }
+      },
+      traverse: function(jsonObj) {
+        var jsonPrettifierParent = document.createElement('json-prettifier');
+        jsonPrettifierParent.label = "Object";
+        if( typeof jsonObj == "object" ) {
+          for(var key in jsonObj) {
+            if (jsonObj.hasOwnProperty(key)) {
+              var jsonPrettifierChild = document.createElement('json-prettifier');
+              jsonPrettifierChild.label = key;
+              var content = this.traverse(jsonObj[key]);
+              if(typeof content == "object") {
+                Polymer.dom(jsonPrettifierChild).appendChild(content);
+              } else {
+                var textNode = document.createTextNode(content);
+                Polymer.dom(jsonPrettifierChild).appendChild(textNode);
+              }
+              Polymer.dom(jsonPrettifierParent).appendChild(jsonPrettifierChild);
+            }
+          }
+        }
+        else {
+          return jsonObj;
+        }
+        return jsonPrettifierParent;
+      },
+      prettify: function() {
+        var textAreaValue = this.$.inpArea.value;
+        var jsonObject = JSON.parse(textAreaValue);
+        var jsonPrettified = this.traverse(jsonObject);
+        Polymer.dom(this.$.content).innerHTML = '';
+        Polymer.dom(this.$.content).appendChild(jsonPrettified);
+      },
     });
   </script>
 </dom-module>
