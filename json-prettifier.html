@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<dom-module id="json-prettifier">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .node {
+        border: 1px solid #ddd;
+        padding: 3px;
+        background: lightyellow;
+        display: blog;
+        clear: both;
+      }
+
+      .node-button {
+        cursor: pointer;
+      }
+      .node-content {
+        margin-left: 30px;
+      }
+    </style>
+    <div class="node">
+      <span>{{label}}</span>
+      <template is="dom-if" if="{{collapsed}}">
+        <span class="node-button" on-tap="onExpand">[+]</span>
+      </template>
+      <template is="dom-if" if="{{!collapsed}}">
+        <span class="node-button" on-tap="onCollapse">[-]</span>
+        <div class="node-content" hidden$="{{collapsed}}">
+          <content></content>
+        </div>
+      </template>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'json-prettifier',
+      properties: {
+        label: {
+          type: String
+        },
+        collapsed: {
+          type: Boolean,
+          value: true
+        }
+      },
+      onExpand: function() {
+        this.collapsed = false;
+      },
+      onCollapse: function() {
+        this.collapsed = true;
+      },
+    });
+  </script>
+</dom-module>

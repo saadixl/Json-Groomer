@@ -1,0 +1,49 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="./json-prettifier.html">
+
+<dom-module id="app-el">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <p>JSON Prettifier</p>
+    <json-prettifier label="Object">
+      <json-prettifier label="abc">
+        abc
+      </json-prettifier>
+      <json-prettifier label="abc">
+        abc
+      </json-prettifier>
+      <json-prettifier label="abc">
+        abc
+      </json-prettifier>
+    </json-prettifier>
+  </template>
+  <script>
+    Polymer({
+      is: 'app-el',
+      properties: {
+        sample: {
+          type: Object,
+          value: {
+            name: 'Masudul Haque',
+            email: 'saadixl@mail.com',
+            address: {
+              house: 'XX',
+              road: 'Y',
+              area: 'Centeral Homeland',
+              city: 'Dhaka',
+              country: 'Bangladesh'
+            },
+            phone: {
+              mobile: '0123456789',
+              office: '0987654321'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</dom-module>

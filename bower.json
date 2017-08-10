@@ -1,0 +1,12 @@
+{
+  "name": "json-prettifier",
+  "description": "A JSON explorer",
+  "main": "index.html",
+  "version": "v1.0.0",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.9.0"
+  },
+  "devDependencies": {
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  }
+}
