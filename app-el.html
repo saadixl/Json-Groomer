@@ -1,6 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="./json-prettifier.html">
+<link rel="import" href="./json-groomer.html">
 
 <dom-module id="app-el">
   <template>
@@ -94,12 +94,12 @@
     Polymer({
       is: 'app-el',
       traverse: function(jsonObj) {
-        var jsonPrettifierParent = document.createElement('json-prettifier');
+        var jsonPrettifierParent = document.createElement('json-groomer');
         jsonPrettifierParent.itemType = "object";
         if(typeof jsonObj === "object") {
           for(var key in jsonObj) {
             if(jsonObj.hasOwnProperty(key)) {
-              var jsonPrettifierChild = document.createElement('json-prettifier');
+              var jsonPrettifierChild = document.createElement('json-groomer');
               jsonPrettifierChild.label = key;
               var content = this.traverse(jsonObj[key]);
               if(typeof content === "object") {
@@ -121,7 +121,7 @@
         var textAreaValue = this.$.inpArea.value;
         var jsonObject = JSON.parse(textAreaValue);
         var jsonPrettified = this.traverse(jsonObject);
-        var finalElement = document.createElement('json-prettifier');
+        var finalElement = document.createElement('json-groomer');
         Polymer.dom(finalElement).appendChild(jsonPrettified);
         finalElement.label = "Object";
         Polymer.dom(this.$.content).innerHTML = '';

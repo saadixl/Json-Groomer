@@ -1,5 +1,5 @@
 {
-  "name": "json-prettifier",
+  "name": "json-groomer",
   "description": "A JSON explorer",
   "main": "index.html",
   "version": "v1.0.0",
