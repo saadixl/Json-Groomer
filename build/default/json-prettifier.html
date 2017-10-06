@@ -1,0 +1,91 @@
+<html><head><link rel="import" href="../../bower_components/polymer/polymer.html">
+</head><body><dom-module id="json-prettifier">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .node {
+        margin: 0 5px;
+        background: #fff;
+        clear: both;
+        padding-left: 3px;
+        border-left: 1px solid #ddd;
+      }
+
+      .node-button {
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        color: #111;
+      }
+      .node-content {
+        margin-left: 20px;
+        font-size: 14px;
+        color: green;
+      }
+
+      .node-label {
+        font-size: 14px;
+      }
+
+      .node-content strong {
+        color: #FF8C00;
+      }
+
+      .node-colon {
+        color: #111 !important;
+      }
+
+    </style>
+    <template is="dom-if" if="{{objectMode}}">
+      <div>
+        <content></content>
+      </div>
+    </template>
+    <template is="dom-if" if="{{!objectMode}}">
+      <div class="node">
+        <span class="node-button" hidden$="{{!collapsed}}" on-tap="onExpand">[+]</span>
+        <span class="node-button" hidden$="{{collapsed}}" on-tap="onCollapse">[-]</span>
+        <strong class="node-label">{{label}}</strong><strong class="node-colon" hidden$="{{collapsed}}">:</strong>
+          <div class="node-content" hidden$="{{collapsed}}">
+            <content></content>
+          </div>
+        </div></template>
+      
+    </template>
+  
+  <script>
+    Polymer({
+      is: 'json-prettifier',
+      properties: {
+        label: {
+          type: String
+        },
+        itemType: {
+          type: String
+        },
+        collapsed: {
+          type: Boolean,
+          value: true
+        },
+        objectMode: {
+          type: Boolean,
+          value: false,
+          computed: 'computerObjectMode(itemType)'
+        }
+      },
+      onExpand: function() {
+        this.collapsed = false;
+      },
+      onCollapse: function() {
+        this.collapsed = true;
+      },
+      computerObjectMode: function(itemType) {
+        return (itemType==="object");
+      }
+    });
+  </script>
+</dom-module>
+</body></html>
